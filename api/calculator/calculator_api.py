@@ -6,7 +6,7 @@ import allure
 from httpx import Response
 
 from api.client.api_client import ApiClient
-from models.numeric_operands import NumericOperands
+from models.calculator.numeric_operands import NumericOperands
 
 
 class CalculatorApi:
