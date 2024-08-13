@@ -12,7 +12,7 @@ class ApiSettings(BaseSettings):
     """
     Настройки для работы с тестируемым API.
 
-    :cvar base_url: Базовый url API.
+    :ivar base_url: Базовый url API.
     """
 
     base_url: str

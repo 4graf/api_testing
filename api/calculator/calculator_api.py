@@ -6,7 +6,6 @@ import allure
 from httpx import Response
 
 from api.client.api_client import ApiClient
-from models.calculator.numeric_operands import NumericOperands
 
 
 class CalculatorApi:
@@ -36,45 +35,45 @@ class CalculatorApi:
         return self.api_client.get('/state')
 
     @allure.step(f'Сложение x и y')
-    def addition(self, operands: NumericOperands) -> Response:
+    def addition(self, operands_payload: dict) -> Response:
         """
         Эндпоинт сложения операндов.
 
-        :param operands: Операнды x и y.
+        :param operands_payload: Операнды x и y.
         :return: Ответ на запрос.
         """
 
-        return self.api_client.post('/addition', json=operands.model_dump())
+        return self.api_client.post('/addition', json=operands_payload)
 
     @allure.step(f'Умножение x и y')
-    def multiplication(self, operands: NumericOperands) -> Response:
+    def multiplication(self, operands_payload: dict) -> Response:
         """
         Эндпоинт умножения операндов.
 
-        :param operands: Операнды x и y.
+        :param operands_payload: Операнды x и y.
         :return: Ответ на запрос.
         """
 
-        return self.api_client.post('/multiplication', json=operands.model_dump())
+        return self.api_client.post('/multiplication', json=operands_payload)
 
     @allure.step(f'Целочисленное деление x на y')
-    def division(self, operands: NumericOperands) -> Response:
+    def division(self, operands_payload: dict) -> Response:
         """
         Эндпоинт целочисленного деления операндов.
 
-        :param operands: Операнды x и y.
+        :param operands_payload: Операнды x и y.
         :return: Ответ на запрос.
         """
 
-        return self.api_client.post('/division', json=operands.model_dump())
+        return self.api_client.post('/division', json=operands_payload)
 
     @allure.step(f'Остаток от деления x на y')
-    def remainder(self, operands: NumericOperands) -> Response:
+    def remainder(self, operands_payload: dict) -> Response:
         """
         Эндпоинт получения остатка от деления операндов.
 
-        :param operands: Операнды x и y.
+        :param operands_payload: Операнды x и y.
         :return: Ответ на запрос.
         """
 
-        return self.api_client.post('/remainder', json=operands.model_dump())
+        return self.api_client.post('/remainder', json=operands_payload)
