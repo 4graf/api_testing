@@ -16,3 +16,21 @@ class ApiSettings(BaseSettings):
     """
 
     base_url: str
+
+
+class CalculatorRoutesSettings(BaseSettings):
+    """
+    Эндпоинты калькулятора.
+
+    :ivar state: Эндпоинт состояния сервера.
+    :ivar addition: Эндпоинт сложения.
+    :ivar multiplication: Эндпоинт умножения.
+    :ivar division: Эндпоинт целочисленного деления.
+    :ivar remainder: Эндпоинт остатка от деления.
+    """
+
+    state: str
+    addition: str
+    multiplication: str
+    division: str
+    remainder: str

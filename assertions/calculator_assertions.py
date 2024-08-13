@@ -1,6 +1,14 @@
+from typing import Any
+
+from pydantic import BaseModel
+
 from models.calculator.calculation_error import CalculationError
 from models.calculator.calculation_result import CalculationResult
 from models.server_state import ServerState
+
+
+def assert_internal_status_code(data: BaseModel, expected_status_code):
+    assert data.status_code == expected_status_code
 
 
 def assert_server_state(server_state: ServerState):
@@ -10,7 +18,7 @@ def assert_server_state(server_state: ServerState):
     :param server_state: Состояние сервера.
     """
 
-    assert server_state.status_code == 0
+    assert_internal_status_code(server_state, 0)
     assert server_state.state == 'OK'
 
 
@@ -22,7 +30,7 @@ def assert_calculator_result(calculation_result: CalculationResult, expected_res
     :param expected_result: Ожидаемый ответ.
     """
 
-    assert calculation_result.status_code == 0
+    assert_internal_status_code(calculation_result, 0)
     assert calculation_result.result == expected_result
 
 
@@ -33,7 +41,7 @@ def assert_calculator_not_int_error(calculation_error: CalculationError):
     :param calculation_error: Ошибка калькулятора.
     """
 
-    assert calculation_error.status_code == 3
+    assert_internal_status_code(calculation_error, 3)
     assert calculation_error.status_message == 'Значения параметров должны быть целыми'
 
 
@@ -44,7 +52,7 @@ def assert_calculator_params_count_error(calculation_error: CalculationError):
     :param calculation_error: Ошибка калькулятора.
     """
 
-    assert calculation_error.status_code == 2
+    assert_internal_status_code(calculation_error, 2)
     assert calculation_error.status_message == 'Не указаны необходимые параметры'
 
 
@@ -55,7 +63,7 @@ def assert_calculator_calculation_error(calculation_error: CalculationError):
     :param calculation_error: Ошибка калькулятора.
     """
 
-    assert calculation_error.status_code == 1
+    assert_internal_status_code(calculation_error, 1)
     assert calculation_error.status_message == 'Ошибка вычисления'
 
 
@@ -66,5 +74,5 @@ def assert_calculator_incorrect_request_error(calculation_error: CalculationErro
     :param calculation_error: Ошибка калькулятора.
     """
 
-    assert calculation_error.status_code == 5
+    assert_internal_status_code(calculation_error, 5)
     assert calculation_error.status_message == 'Неправильный формат тела запроса'

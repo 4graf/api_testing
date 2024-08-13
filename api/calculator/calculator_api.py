@@ -6,6 +6,9 @@ import allure
 from httpx import Response
 
 from api.client.api_client import ApiClient
+from settings import CalculatorRoutesSettings
+
+calculator_routes_settings = CalculatorRoutesSettings()
 
 
 class CalculatorApi:
@@ -32,7 +35,7 @@ class CalculatorApi:
         :return: Ответ на запрос.
         """
 
-        return self.api_client.get('/state')
+        return self.api_client.get(calculator_routes_settings.state)
 
     @allure.step(f'Сложение x и y')
     def addition(self, operands_payload: dict) -> Response:
@@ -43,7 +46,7 @@ class CalculatorApi:
         :return: Ответ на запрос.
         """
 
-        return self.api_client.post('/addition', json=operands_payload)
+        return self.api_client.post(calculator_routes_settings.addition, json=operands_payload)
 
     @allure.step(f'Умножение x и y')
     def multiplication(self, operands_payload: dict) -> Response:
@@ -54,7 +57,7 @@ class CalculatorApi:
         :return: Ответ на запрос.
         """
 
-        return self.api_client.post('/multiplication', json=operands_payload)
+        return self.api_client.post(calculator_routes_settings.multiplication, json=operands_payload)
 
     @allure.step(f'Целочисленное деление x на y')
     def division(self, operands_payload: dict) -> Response:
@@ -65,7 +68,7 @@ class CalculatorApi:
         :return: Ответ на запрос.
         """
 
-        return self.api_client.post('/division', json=operands_payload)
+        return self.api_client.post(calculator_routes_settings.division, json=operands_payload)
 
     @allure.step(f'Остаток от деления x на y')
     def remainder(self, operands_payload: dict) -> Response:
@@ -76,4 +79,4 @@ class CalculatorApi:
         :return: Ответ на запрос.
         """
 
-        return self.api_client.post('/remainder', json=operands_payload)
+        return self.api_client.post(calculator_routes_settings.remainder, json=operands_payload)

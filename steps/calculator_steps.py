@@ -24,7 +24,7 @@ class CalculatorSteps:
         """
         Конструктор CalculatorSteps.
 
-        :param api_client: API калькулятора.
+        :param api_client: API клиент.
         """
 
         self.calculator_api = CalculatorApi(api_client)
@@ -81,18 +81,3 @@ class CalculatorSteps:
         """
 
         return self.calculator_api.remainder(operands.model_dump())
-
-    @classmethod
-    @allure.step('Получить данные с состоянием сервера из ответа')
-    def get_server_state(cls, response: Response) -> ServerState:
-        return ServerState.model_validate(response.json())
-
-    @classmethod
-    @allure.step('Получить результат вычисления калькулятора из ответа')
-    def get_calculation_result(cls, response: Response) -> CalculationResult:
-        return CalculationResult.model_validate(response.json())
-
-    @classmethod
-    @allure.step('Получить ошибку вычисления калькулятора из ответа')
-    def get_calculation_error(cls, response: Response) -> CalculationError:
-        return CalculationError.model_validate(response.json())

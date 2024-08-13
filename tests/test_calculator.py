@@ -1,11 +1,12 @@
 import allure
 import pytest
 
-from assertions.base_assertions import assert_status_code, assert_json_header
+from assertions.base_assertions import assert_http_status_code, assert_json_header
 from assertions.calculator_assertions import assert_calculator_result, assert_server_state, \
     assert_calculator_not_int_error, assert_calculator_params_count_error, assert_calculator_calculation_error
 from data_providers.calculator_data_provider import CalculatorDataProvider
 from models.calculator.numeric_operands import IntegerOperands, AnyOperands, OneOperand, ZeroOperands
+from steps.calculator_schemas_steps import CalculatorSchemasSteps
 from tests.utils import idfn
 
 
@@ -17,10 +18,10 @@ class TestCalculator:
     @allure.title('Состояние сервера - запущен')
     def test_server_state(self, calculator_steps):
         response = calculator_steps.do_server_state()
-        assert_status_code(response=response, expected_code=200)
+        assert_http_status_code(response=response, expected_code=200)
         assert_json_header(response=response)
 
-        state = calculator_steps.get_server_state(response)
+        state = CalculatorSchemasSteps.get_server_state(response)
         assert_server_state(server_state=state)
 
     @allure.story('Сложение')
@@ -31,10 +32,10 @@ class TestCalculator:
     def test_successful_addition_two_int_number(self, calculator_steps, operands: IntegerOperands, expected_result):
         response = calculator_steps.do_addition(operands)
 
-        assert_status_code(response=response, expected_code=200)
+        assert_http_status_code(response=response, expected_code=200)
         assert_json_header(response=response)
 
-        result = calculator_steps.get_calculation_result(response)
+        result = CalculatorSchemasSteps.get_calculation_result(response)
         assert_calculator_result(calculation_result=result, expected_result=expected_result)
 
     @allure.story('Умножение')
@@ -45,10 +46,10 @@ class TestCalculator:
     def test_successful_multiplication_two_int_number(self, calculator_steps, operands: IntegerOperands, expected_result):
         response = calculator_steps.do_multiplication(operands)
 
-        assert_status_code(response=response, expected_code=200)
+        assert_http_status_code(response=response, expected_code=200)
         assert_json_header(response=response)
 
-        result = calculator_steps.get_calculation_result(response)
+        result = CalculatorSchemasSteps.get_calculation_result(response)
         assert_calculator_result(calculation_result=result, expected_result=expected_result)
 
     @allure.story('Деление')
@@ -59,10 +60,10 @@ class TestCalculator:
     def test_successful_division_two_int_number(self, calculator_steps, operands: IntegerOperands, expected_result):
         response = calculator_steps.do_division(operands)
 
-        assert_status_code(response=response, expected_code=200)
+        assert_http_status_code(response=response, expected_code=200)
         assert_json_header(response=response)
 
-        result = calculator_steps.get_calculation_result(response)
+        result = CalculatorSchemasSteps.get_calculation_result(response)
         assert_calculator_result(calculation_result=result, expected_result=expected_result)
 
     @allure.story('Остаток от деления')
@@ -73,10 +74,10 @@ class TestCalculator:
     def test_successful_remainder_two_int_number(self, calculator_steps, operands: IntegerOperands, expected_result):
         response = calculator_steps.do_remainder(operands)
 
-        assert_status_code(response=response, expected_code=200)
+        assert_http_status_code(response=response, expected_code=200)
         assert_json_header(response=response)
 
-        result = calculator_steps.get_calculation_result(response)
+        result = CalculatorSchemasSteps.get_calculation_result(response)
         assert_calculator_result(calculation_result=result, expected_result=expected_result)
 
     @allure.story('Сложение')
@@ -87,10 +88,10 @@ class TestCalculator:
     def test_unsuccessful_addition_not_int_number(self, calculator_steps, operands: AnyOperands):
         response = calculator_steps.do_addition(operands)
 
-        # assert_status_code(response=response, expected_code=422)
+        # assert_http_status_code(response=response, expected_code=422)
         assert_json_header(response=response)
 
-        error = calculator_steps.get_calculation_error(response)
+        error = CalculatorSchemasSteps.get_calculation_error(response)
         assert_calculator_not_int_error(calculation_error=error)
 
     @allure.story('Сложение')
@@ -100,10 +101,10 @@ class TestCalculator:
 
         response = calculator_steps.do_addition(one_operand)
 
-        # assert_status_code(response=response, expected_code=422)
+        # assert_http_status_code(response=response, expected_code=422)
         assert_json_header(response=response)
 
-        error = calculator_steps.get_calculation_error(response)
+        error = CalculatorSchemasSteps.get_calculation_error(response)
         assert_calculator_params_count_error(calculation_error=error)
 
     @allure.story('Сложение')
@@ -113,10 +114,10 @@ class TestCalculator:
 
         response = calculator_steps.do_addition(zero_operands)
 
-        # assert_status_code(response=response, expected_code=422)
+        # assert_http_status_code(response=response, expected_code=422)
         assert_json_header(response=response)
 
-        error = calculator_steps.get_calculation_error(response)
+        error = CalculatorSchemasSteps.get_calculation_error(response)
         assert_calculator_params_count_error(calculation_error=error)
 
     @allure.story('Умножение')
@@ -127,10 +128,10 @@ class TestCalculator:
     def test_unsuccessful_multiplication_not_int_number(self, calculator_steps, operands: AnyOperands):
         response = calculator_steps.do_multiplication(operands)
 
-        # assert_status_code(response=response, expected_code=422)
+        # assert_http_status_code(response=response, expected_code=422)
         assert_json_header(response=response)
 
-        error = calculator_steps.get_calculation_error(response)
+        error = CalculatorSchemasSteps.get_calculation_error(response)
         assert_calculator_not_int_error(calculation_error=error)
 
     @allure.story('Целочисленное деление')
@@ -141,10 +142,10 @@ class TestCalculator:
     def test_unsuccessful_division_not_int_number(self, calculator_steps, operands: AnyOperands):
         response = calculator_steps.do_division(operands)
 
-        # assert_status_code(response=response, expected_code=422)
+        # assert_http_status_code(response=response, expected_code=422)
         assert_json_header(response=response)
 
-        error = calculator_steps.get_calculation_error(response)
+        error = CalculatorSchemasSteps.get_calculation_error(response)
         assert_calculator_not_int_error(calculation_error=error)
 
     @allure.story('Целочисленное деление')
@@ -156,10 +157,10 @@ class TestCalculator:
     def test_unsuccessful_remainder_by_zero(self, calculator_steps, operands):
         response = calculator_steps.do_division(operands)
 
-        # assert_status_code(response=response, expected_code=422)
+        # assert_http_status_code(response=response, expected_code=422)
         assert_json_header(response=response)
 
-        error = calculator_steps.get_calculation_error(response)
+        error = CalculatorSchemasSteps.get_calculation_error(response)
         assert_calculator_calculation_error(calculation_error=error)
 
     @allure.story('Остаток от деления')
@@ -170,10 +171,10 @@ class TestCalculator:
     def test_unsuccessful_remainder_not_int_number(self, calculator_steps, operands: AnyOperands):
         response = calculator_steps.do_remainder(operands)
 
-        # assert_status_code(response=response, expected_code=422)
+        # assert_http_status_code(response=response, expected_code=422)
         assert_json_header(response=response)
 
-        error = calculator_steps.get_calculation_error(response)
+        error = CalculatorSchemasSteps.get_calculation_error(response)
         assert_calculator_not_int_error(calculation_error=error)
 
     @allure.story('Остаток от деления')
@@ -185,8 +186,8 @@ class TestCalculator:
     def test_unsuccessful_division_by_zero(self, calculator_steps, operands):
         response = calculator_steps.do_remainder(operands)
 
-        # assert_status_code(response=response, expected_code=422)
+        # assert_http_status_code(response=response, expected_code=422)
         assert_json_header(response=response)
 
-        error = calculator_steps.get_calculation_error(response)
+        error = CalculatorSchemasSteps.get_calculation_error(response)
         assert_calculator_calculation_error(calculation_error=error)

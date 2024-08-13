@@ -2,7 +2,7 @@ from httpx import Response
 from pydantic import BaseModel
 
 
-def assert_status_code(response: Response, expected_code: int):
+def assert_http_status_code(response: Response, expected_code: int):
     """
     Проверяет код ответа на запрос с ожидаемым кодом.
 
@@ -21,6 +21,18 @@ def assert_json_header(response: Response):
     """
 
     assert response.headers['Content-Type'] == 'application/json'
+
+
+def assert_header_access_method(response: Response, expected_methods: str):
+    """
+    Проверяет заголовки ответа на запрос с json.
+
+    :param response: Ответ от сервера на запрос.
+    :param expected_methods: Ожидаемые разрешённые методы.
+    """
+
+    assert response.headers['Access-Control-Request-Method'] == expected_methods
+
 
 
 def assert_schema(response: Response, expected_schema: type[BaseModel]):

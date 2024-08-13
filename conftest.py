@@ -15,3 +15,8 @@ def api_client():
 @pytest.fixture(scope='session')
 def calculator_steps(api_client):
     yield CalculatorSteps(api_client)
+
+
+@pytest.fixture(scope='session')
+def calculator_schemas_steps(api_client):
+    yield CalculatorSchemasSteps(api_client)
