@@ -9,6 +9,7 @@ from data_providers.calculator_data_provider import CalculatorDataProvider
 from models.calculator.numeric_operands import IntegerOperands, AnyOperands, OneOperand, ZeroOperands, ExtraOperands, \
     IncorrectNameOperands
 from steps.calculator.calculator_schemas_steps import CalculatorSchemasSteps
+from steps.server.server_schemas_steps import ServerSchemasSteps
 from tests.utils import idfn
 
 
@@ -40,7 +41,7 @@ class TestMultiplication:
         # assert_http_status_code(response=response, expected_code=422)
         assert_json_header(response=response)
 
-        error = CalculatorSchemasSteps.get_calculation_error(response)
+        error = ServerSchemasSteps.get_server_error(response)
         assert_calculator_not_int_error(calculation_error=error)
 
     @allure.title('Безуспешное умножение с числом, превышающим размер')
@@ -53,7 +54,7 @@ class TestMultiplication:
         # assert_http_status_code(response=response, expected_code=422)
         assert_json_header(response=response)
 
-        error = CalculatorSchemasSteps.get_calculation_error(response)
+        error = ServerSchemasSteps.get_server_error(response)
         assert_calculator_oversize_error(calculation_error=error)
 
     @allure.title('Безуспешное умножение с 1 параметром')
@@ -65,7 +66,7 @@ class TestMultiplication:
         # assert_http_status_code(response=response, expected_code=422)
         assert_json_header(response=response)
 
-        error = CalculatorSchemasSteps.get_calculation_error(response)
+        error = ServerSchemasSteps.get_server_error(response)
         assert_calculator_params_count_error(calculation_error=error)
 
     @allure.title('Безуспешное умножение без параметров')
@@ -77,7 +78,7 @@ class TestMultiplication:
         # assert_http_status_code(response=response, expected_code=422)
         assert_json_header(response=response)
 
-        error = CalculatorSchemasSteps.get_calculation_error(response)
+        error = ServerSchemasSteps.get_server_error(response)
         assert_calculator_params_count_error(calculation_error=error)
 
     @allure.title('Безуспешное умножение с лишними параметрами')
@@ -89,7 +90,7 @@ class TestMultiplication:
         # assert_http_status_code(response=response, expected_code=422)
         assert_json_header(response=response)
 
-        error = CalculatorSchemasSteps.get_calculation_error(response)
+        error = ServerSchemasSteps.get_server_error(response)
         assert_calculator_params_count_error(calculation_error=error)
 
     @allure.title('Безуспешное умножение с некорректными именами параметров')
@@ -101,5 +102,5 @@ class TestMultiplication:
         # assert_http_status_code(response=response, expected_code=422)
         assert_json_header(response=response)
 
-        error = CalculatorSchemasSteps.get_calculation_error(response)
+        error = ServerSchemasSteps.get_server_error(response)
         assert_calculator_params_count_error(calculation_error=error)

@@ -9,6 +9,7 @@ from data_providers.calculator_data_provider import CalculatorDataProvider
 from models.calculator.numeric_operands import IntegerOperands, AnyOperands, OneOperand, ZeroOperands, ExtraOperands, \
     IncorrectNameOperands
 from steps.calculator.calculator_schemas_steps import CalculatorSchemasSteps
+from steps.server.server_schemas_steps import ServerSchemasSteps
 from tests.utils import idfn
 
 
@@ -41,7 +42,7 @@ class TestDivision:
         # assert_http_status_code(response=response, expected_code=422)
         assert_json_header(response=response)
 
-        error = CalculatorSchemasSteps.get_calculation_error(response)
+        error = ServerSchemasSteps.get_server_error(response)
         assert_calculator_calculation_error(calculation_error=error)
 
     @allure.title('Безуспешное деление с нецелочисленным числом')
@@ -54,7 +55,7 @@ class TestDivision:
         # assert_http_status_code(response=response, expected_code=422)
         assert_json_header(response=response)
 
-        error = CalculatorSchemasSteps.get_calculation_error(response)
+        error = ServerSchemasSteps.get_server_error(response)
         assert_calculator_not_int_error(calculation_error=error)
 
     @allure.title('Безуспешное деление с числом, превышающим размер')
@@ -67,7 +68,7 @@ class TestDivision:
         # assert_http_status_code(response=response, expected_code=422)
         assert_json_header(response=response)
 
-        error = CalculatorSchemasSteps.get_calculation_error(response)
+        error = ServerSchemasSteps.get_server_error(response)
         assert_calculator_oversize_error(calculation_error=error)
 
     @allure.title('Безуспешное деление с 1 параметром')
@@ -79,7 +80,7 @@ class TestDivision:
         # assert_http_status_code(response=response, expected_code=422)
         assert_json_header(response=response)
 
-        error = CalculatorSchemasSteps.get_calculation_error(response)
+        error = ServerSchemasSteps.get_server_error(response)
         assert_calculator_params_count_error(calculation_error=error)
 
     @allure.title('Безуспешное деление без параметров')
@@ -91,7 +92,7 @@ class TestDivision:
         # assert_http_status_code(response=response, expected_code=422)
         assert_json_header(response=response)
 
-        error = CalculatorSchemasSteps.get_calculation_error(response)
+        error = ServerSchemasSteps.get_server_error(response)
         assert_calculator_params_count_error(calculation_error=error)
 
     @allure.title('Безуспешное деление с лишними параметрами')
@@ -103,7 +104,7 @@ class TestDivision:
         # assert_http_status_code(response=response, expected_code=422)
         assert_json_header(response=response)
 
-        error = CalculatorSchemasSteps.get_calculation_error(response)
+        error = ServerSchemasSteps.get_server_error(response)
         assert_calculator_params_count_error(calculation_error=error)
 
     @allure.title('Безуспешное деление с некорректными именами параметров')
@@ -115,5 +116,5 @@ class TestDivision:
         # assert_http_status_code(response=response, expected_code=422)
         assert_json_header(response=response)
 
-        error = CalculatorSchemasSteps.get_calculation_error(response)
+        error = ServerSchemasSteps.get_server_error(response)
         assert_calculator_params_count_error(calculation_error=error)

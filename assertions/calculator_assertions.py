@@ -1,5 +1,5 @@
 from assertions.base_assertions import assert_internal_status_code
-from models.calculator.calculation_error import CalculationError
+from models.calculator.server_error import ServerError
 from models.calculator.calculation_result import CalculationResult
 
 
@@ -15,7 +15,7 @@ def assert_calculator_result(calculation_result: CalculationResult, expected_res
     assert calculation_result.result == expected_result
 
 
-def assert_calculator_not_int_error(calculation_error: CalculationError):
+def assert_calculator_not_int_error(calculation_error: ServerError):
     """
     Проверяет ошибку нецелочисленного вычисления калькулятора.
 
@@ -26,7 +26,7 @@ def assert_calculator_not_int_error(calculation_error: CalculationError):
     assert calculation_error.status_message == 'Значения параметров должны быть целыми'
 
 
-def assert_calculator_oversize_error(calculation_error: CalculationError):
+def assert_calculator_oversize_error(calculation_error: ServerError):
     """
     Проверяет ошибку превышения размера параметра для вычисления калькулятора.
 
@@ -37,7 +37,7 @@ def assert_calculator_oversize_error(calculation_error: CalculationError):
     assert calculation_error.status_message == 'Превышены максимальные значения параметров'
 
 
-def assert_calculator_params_count_error(calculation_error: CalculationError):
+def assert_calculator_params_count_error(calculation_error: ServerError):
     """
     Проверяет ошибку с недостаточным количеством чисел для вычисления калькулятором.
 
@@ -48,7 +48,7 @@ def assert_calculator_params_count_error(calculation_error: CalculationError):
     assert calculation_error.status_message == 'Не указаны необходимые параметры'
 
 
-def assert_calculator_calculation_error(calculation_error: CalculationError):
+def assert_calculator_calculation_error(calculation_error: ServerError):
     """
     Проверяет ошибку вычисления.
 
@@ -59,7 +59,7 @@ def assert_calculator_calculation_error(calculation_error: CalculationError):
     assert calculation_error.status_message == 'Ошибка вычисления'
 
 
-def assert_calculator_incorrect_request_error(calculation_error: CalculationError):
+def assert_calculator_incorrect_request_error(calculation_error: ServerError):
     """
     Проверяет ошибку с неправильным форматом тела запроса.
 

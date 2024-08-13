@@ -33,8 +33,3 @@ class ServerSteps:
         """
 
         return self.server_api.state()
-
-    @classmethod
-    @allure.step('Получить данные с состоянием сервера из ответа')
-    def get_server_state(cls, response: Response) -> ServerState:
-        return ServerState.model_validate(response.json())

@@ -1,5 +1,5 @@
 """
-Логические шаги сценариев использования калькулятора.
+Логические шаги сценариев для проверки схем калькулятора.
 """
 from typing import Literal, Any
 
@@ -7,7 +7,7 @@ import allure
 from httpx import Response
 
 from api.client.api_client import ApiClient
-from models.calculator.calculation_error import CalculationError
+from models.calculator.server_error import ServerError
 from models.calculator.calculation_result import CalculationResult
 from settings import CalculatorRoutesSettings
 
@@ -91,8 +91,3 @@ class CalculatorSchemasSteps:
     @allure.step('Получить результат вычисления калькулятора из ответа')
     def get_calculation_result(cls, response: Response) -> CalculationResult:
         return CalculationResult.model_validate(response.json())
-
-    @classmethod
-    @allure.step('Получить ошибку вычисления калькулятора из ответа')
-    def get_calculation_error(cls, response: Response) -> CalculationError:
-        return CalculationError.model_validate(response.json())

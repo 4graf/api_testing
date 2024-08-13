@@ -6,10 +6,7 @@ from httpx import Response
 
 from api.calculator.calculator_api import CalculatorApi
 from api.client.api_client import ApiClient
-from models.calculator.calculation_error import CalculationError
-from models.calculator.calculation_result import CalculationResult
 from models.calculator.numeric_operands import BaseOperands
-from models.server_state import ServerState
 
 
 # В рамках текущего проекта просто дублирует методы CalculatorApi
@@ -28,15 +25,6 @@ class CalculatorSteps:
         """
 
         self.calculator_api = CalculatorApi(api_client)
-
-    def do_server_state(self) -> Response:
-        """
-        Получить состояние сервера.
-
-        :return: Ответ сервера на запрос.
-        """
-
-        return self.calculator_api.state()
 
     @allure.step('Выполнить сложение чисел')
     def do_addition(self, operands: BaseOperands) -> Response:

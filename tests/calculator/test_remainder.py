@@ -9,6 +9,7 @@ from data_providers.calculator_data_provider import CalculatorDataProvider
 from models.calculator.numeric_operands import IntegerOperands, AnyOperands, OneOperand, ZeroOperands, ExtraOperands, \
     IncorrectNameOperands
 from steps.calculator.calculator_schemas_steps import CalculatorSchemasSteps
+from steps.server.server_schemas_steps import ServerSchemasSteps
 from tests.utils import idfn
 
 
@@ -41,7 +42,7 @@ class TestRemainder:
         # assert_http_status_code(response=response, expected_code=422)
         assert_json_header(response=response)
 
-        error = CalculatorSchemasSteps.get_calculation_error(response)
+        error = ServerSchemasSteps.get_server_error(response)
         assert_calculator_calculation_error(calculation_error=error)
 
     @allure.title('Безуспешное вычисление остатка от деления с нецелочисленным числом')
@@ -54,7 +55,7 @@ class TestRemainder:
         # assert_http_status_code(response=response, expected_code=422)
         assert_json_header(response=response)
 
-        error = CalculatorSchemasSteps.get_calculation_error(response)
+        error = ServerSchemasSteps.get_server_error(response)
         assert_calculator_not_int_error(calculation_error=error)
 
     @allure.title('Безуспешное вычисление остатка от деления с числом, превышающим размер')
@@ -67,7 +68,7 @@ class TestRemainder:
         # assert_http_status_code(response=response, expected_code=422)
         assert_json_header(response=response)
 
-        error = CalculatorSchemasSteps.get_calculation_error(response)
+        error = ServerSchemasSteps.get_server_error(response)
         assert_calculator_oversize_error(calculation_error=error)
 
     @allure.title('Безуспешное вычисление остатка от деления с 1 параметром')
@@ -79,7 +80,7 @@ class TestRemainder:
         # assert_http_status_code(response=response, expected_code=422)
         assert_json_header(response=response)
 
-        error = CalculatorSchemasSteps.get_calculation_error(response)
+        error = ServerSchemasSteps.get_server_error(response)
         assert_calculator_params_count_error(calculation_error=error)
 
     @allure.title('Безуспешное вычисление остатка от деления без параметров')
@@ -91,7 +92,7 @@ class TestRemainder:
         # assert_http_status_code(response=response, expected_code=422)
         assert_json_header(response=response)
 
-        error = CalculatorSchemasSteps.get_calculation_error(response)
+        error = ServerSchemasSteps.get_server_error(response)
         assert_calculator_params_count_error(calculation_error=error)
 
     @allure.title('Безуспешное вычисление остатка от деления с лишними параметрами')
@@ -103,7 +104,7 @@ class TestRemainder:
         # assert_http_status_code(response=response, expected_code=422)
         assert_json_header(response=response)
 
-        error = CalculatorSchemasSteps.get_calculation_error(response)
+        error = ServerSchemasSteps.get_server_error(response)
         assert_calculator_params_count_error(calculation_error=error)
 
     @allure.title('Безуспешное вычисление остатка от деления с некорректными именами параметров')
@@ -115,7 +116,7 @@ class TestRemainder:
         # assert_http_status_code(response=response, expected_code=422)
         assert_json_header(response=response)
 
-        error = CalculatorSchemasSteps.get_calculation_error(response)
+        error = ServerSchemasSteps.get_server_error(response)
         assert_calculator_params_count_error(calculation_error=error)
 
     @allure.title('Безуспешное вычисление остатка от деления на 0')
@@ -129,5 +130,5 @@ class TestRemainder:
         # assert_http_status_code(response=response, expected_code=422)
         assert_json_header(response=response)
 
-        error = CalculatorSchemasSteps.get_calculation_error(response)
+        error = ServerSchemasSteps.get_server_error(response)
         assert_calculator_calculation_error(calculation_error=error)

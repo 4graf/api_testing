@@ -5,7 +5,7 @@
 from pydantic import BaseModel, Field
 
 
-class CalculationError(BaseModel):
+class ServerError(BaseModel):
     """
     Ответ на запрос, содержащий ошибку.
 
