@@ -27,16 +27,6 @@ class CalculatorApi:
 
         self.api_client = api_client
 
-    @allure.step(f'Проверка состояния сервера')
-    def state(self) -> Response:
-        """
-        Эндпоинт проверки состояния сервера.
-
-        :return: Ответ на запрос.
-        """
-
-        return self.api_client.get(calculator_routes_settings.state)
-
     @allure.step(f'Сложение x и y')
     def addition(self, operands_payload: dict) -> Response:
         """

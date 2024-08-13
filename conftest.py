@@ -1,8 +1,8 @@
 import pytest
 
 from api.client.utils import get_api_client
-from steps.calculator_schemas_steps import CalculatorSchemasSteps
-from steps.calculator_steps import CalculatorSteps
+from steps.calculator.calculator_schemas_steps import CalculatorSchemasSteps
+from steps.calculator.calculator_steps import CalculatorSteps
 
 
 @pytest.fixture(scope='session')

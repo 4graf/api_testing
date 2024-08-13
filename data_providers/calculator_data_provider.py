@@ -37,10 +37,20 @@ class CalculatorDataProvider:
     @classmethod
     def get_unsuccessful_not_int_data(cls, path: str | None = None) -> list[AnyOperands]:
         if not path:
-            path = os.path.join(os.path.dirname(__file__), 'data/not_int_addition.csv')
+            path = os.path.join(os.path.dirname(__file__), 'data/not_int.csv')
         with open(path, 'r') as f:
             reader = csv.DictReader(f, skipinitialspace=True)
             data = [AnyOperands(x=row['x'], y=row['y']) for row in reader]
+
+        return data
+
+    @classmethod
+    def get_unsuccessful_oversize_data(cls, path: str | None = None) -> list[IntegerOperands]:
+        if not path:
+            path = os.path.join(os.path.dirname(__file__), 'data/oversize.csv')
+        with open(path, 'r') as f:
+            reader = csv.DictReader(f, skipinitialspace=True)
+            data = [IntegerOperands(x=row['x'], y=row['y']) for row in reader]
 
         return data
 

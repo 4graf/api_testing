@@ -22,7 +22,6 @@ class CalculatorRoutesSettings(BaseSettings):
     """
     Эндпоинты калькулятора.
 
-    :ivar state: Эндпоинт состояния сервера.
     :ivar addition: Эндпоинт сложения.
     :ivar multiplication: Эндпоинт умножения.
     :ivar division: Эндпоинт целочисленного деления.
@@ -34,3 +33,13 @@ class CalculatorRoutesSettings(BaseSettings):
     multiplication: str
     division: str
     remainder: str
+
+
+class ServerRoutesSettings(BaseSettings):
+    """
+    Эндпоинты сервера.
+
+    :ivar state: Эндпоинт состояния сервера.
+    """
+
+    state: str

@@ -1,25 +1,6 @@
-from typing import Any
-
-from pydantic import BaseModel
-
+from assertions.base_assertions import assert_internal_status_code
 from models.calculator.calculation_error import CalculationError
 from models.calculator.calculation_result import CalculationResult
-from models.server_state import ServerState
-
-
-def assert_internal_status_code(data: BaseModel, expected_status_code):
-    assert data.status_code == expected_status_code
-
-
-def assert_server_state(server_state: ServerState):
-    """
-    Проверяет состояние сервера.
-
-    :param server_state: Состояние сервера.
-    """
-
-    assert_internal_status_code(server_state, 0)
-    assert server_state.state == 'OK'
 
 
 def assert_calculator_result(calculation_result: CalculationResult, expected_result: int):
@@ -43,6 +24,17 @@ def assert_calculator_not_int_error(calculation_error: CalculationError):
 
     assert_internal_status_code(calculation_error, 3)
     assert calculation_error.status_message == 'Значения параметров должны быть целыми'
+
+
+def assert_calculator_oversize_error(calculation_error: CalculationError):
+    """
+    Проверяет ошибку превышения размера параметра для вычисления калькулятора.
+
+    :param calculation_error: Ошибка калькулятора.
+    """
+
+    assert_internal_status_code(calculation_error, 4)
+    assert calculation_error.status_message == 'Превышены максимальные значения параметров'
 
 
 def assert_calculator_params_count_error(calculation_error: CalculationError):

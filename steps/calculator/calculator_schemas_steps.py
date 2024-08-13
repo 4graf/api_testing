@@ -9,7 +9,6 @@ from httpx import Response
 from api.client.api_client import ApiClient
 from models.calculator.calculation_error import CalculationError
 from models.calculator.calculation_result import CalculationResult
-from models.server_state import ServerState
 from settings import CalculatorRoutesSettings
 
 calculator_routes_settings = CalculatorRoutesSettings()
@@ -87,11 +86,6 @@ class CalculatorSchemasSteps:
         """
         body = payload.model_dump() if payload else None
         return self.api_client.request(url=calculator_routes_settings.remainder, method=method, json=body)
-
-    @classmethod
-    @allure.step('Получить данные с состоянием сервера из ответа')
-    def get_server_state(cls, response: Response) -> ServerState:
-        return ServerState.model_validate(response.json())
 
     @classmethod
     @allure.step('Получить результат вычисления калькулятора из ответа')

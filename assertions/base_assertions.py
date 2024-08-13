@@ -34,6 +34,9 @@ def assert_header_access_method(response: Response, expected_methods: str):
     assert response.headers['Access-Control-Request-Method'] == expected_methods
 
 
+def assert_internal_status_code(data: BaseModel, expected_status_code):
+    assert data.status_code == expected_status_code
+
 
 def assert_schema(response: Response, expected_schema: type[BaseModel]):
     """
