@@ -12,7 +12,8 @@ def assert_calculator_result(calculation_result: CalculationResult, expected_res
     """
 
     assert_internal_status_code(calculation_result, 0)
-    assert calculation_result.result == expected_result
+    assert calculation_result.result == expected_result, \
+        f'expected result: {expected_result}\nactual result: {calculation_result.result}\n'
 
 
 def assert_calculator_not_int_error(calculation_error: ServerError):
@@ -23,7 +24,10 @@ def assert_calculator_not_int_error(calculation_error: ServerError):
     """
 
     assert_internal_status_code(calculation_error, 3)
-    assert calculation_error.status_message == 'Значения параметров должны быть целыми'
+    expected_message = 'Значения параметров должны быть целыми'
+    assert calculation_error.status_message == expected_message, \
+        (f'expected message: {expected_message}\n'
+         f'actual message: {calculation_error.status_message}\n')
 
 
 def assert_calculator_oversize_error(calculation_error: ServerError):
@@ -34,7 +38,10 @@ def assert_calculator_oversize_error(calculation_error: ServerError):
     """
 
     assert_internal_status_code(calculation_error, 4)
-    assert calculation_error.status_message == 'Превышены максимальные значения параметров'
+    expected_message = 'Превышены максимальные значения параметров'
+    assert calculation_error.status_message == expected_message, \
+        (f'expected message: {expected_message}\n'
+         f'actual message: {calculation_error.status_message}\n')
 
 
 def assert_calculator_params_count_error(calculation_error: ServerError):
@@ -45,7 +52,10 @@ def assert_calculator_params_count_error(calculation_error: ServerError):
     """
 
     assert_internal_status_code(calculation_error, 2)
-    assert calculation_error.status_message == 'Не указаны необходимые параметры'
+    expected_message = 'Не указаны необходимые параметры'
+    assert calculation_error.status_message == expected_message, \
+        (f'expected message: {expected_message}\n'
+         f'actual message: {calculation_error.status_message}\n')
 
 
 def assert_calculator_calculation_error(calculation_error: ServerError):
@@ -56,7 +66,11 @@ def assert_calculator_calculation_error(calculation_error: ServerError):
     """
 
     assert_internal_status_code(calculation_error, 1)
-    assert calculation_error.status_message == 'Ошибка вычисления'
+    expected_message = 'Ошибка вычисления'
+    assert calculation_error.status_message == expected_message, \
+        (f'expected message: {expected_message}\n'
+         f'actual message: {calculation_error.status_message}\n')
+
 
 
 def assert_calculator_incorrect_request_error(calculation_error: ServerError):
@@ -67,4 +81,7 @@ def assert_calculator_incorrect_request_error(calculation_error: ServerError):
     """
 
     assert_internal_status_code(calculation_error, 5)
-    assert calculation_error.status_message == 'Неправильный формат тела запроса'
+    expected_message = 'Неправильный формат тела запроса'
+    assert calculation_error.status_message == expected_message, \
+        (f'expected message: {expected_message}\n'
+         f'actual message: {calculation_error.status_message}\n')
