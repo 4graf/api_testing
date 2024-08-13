@@ -2,7 +2,7 @@ import allure
 
 from assertions.base_assertions import assert_http_status_code, assert_json_header
 from assertions.server_assertions import assert_server_state
-from steps.server.server_schemas_steps import ServerSchemasSteps
+from steps.server_api.server_schemas_steps import ServerSchemasSteps
 
 
 @allure.epic('Сервер')

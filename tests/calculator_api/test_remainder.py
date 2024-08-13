@@ -8,22 +8,22 @@ from assertions.calculator_assertions import assert_calculator_result, assert_ca
 from data_providers.calculator_data_provider import CalculatorDataProvider
 from models.calculator.numeric_operands import IntegerOperands, AnyOperands, OneOperand, ZeroOperands, ExtraOperands, \
     IncorrectNameOperands
-from steps.calculator.calculator_schemas_steps import CalculatorSchemasSteps
-from steps.server.server_schemas_steps import ServerSchemasSteps
+from steps.calculator_api.calculator_schemas_steps import CalculatorSchemasSteps
+from steps.server_api.server_schemas_steps import ServerSchemasSteps
 from tests.utils import idfn
 
 
 @allure.epic('Калькулятор')
 @allure.feature('Вычисления калькулятора')
-@allure.story('Целочисленное деление')
-class TestDivision:
+@allure.story('Вычисление остатка от деления')
+class TestRemainder:
 
-    @allure.title('Успешное деление двух целых чисел')
+    @allure.title('Успешное вычисление остатка от деления двух целых чисел')
     @pytest.mark.parametrize("operands, expected_result",
-                             CalculatorDataProvider.get_successful_division_data(),
+                             CalculatorDataProvider.get_successful_remainder_data(),
                              ids=idfn)
-    def test_successful_division_two_int_number(self, calculator_steps, operands: IntegerOperands, expected_result):
-        response = calculator_steps.do_division(operands)
+    def test_successful_remainder_two_int_number(self, calculator_steps, operands: IntegerOperands, expected_result):
+        response = calculator_steps.do_remainder(operands)
 
         assert_http_status_code(response=response, expected_code=200)
         assert_json_header(response=response)
@@ -31,13 +31,13 @@ class TestDivision:
         result = CalculatorSchemasSteps.get_calculation_result(response)
         assert_calculator_result(calculation_result=result, expected_result=expected_result)
 
-    @allure.title('Безуспешное целочисленное деление на 0')
+    @allure.title('Безуспешное целочисленное вычисление остатка от деления на 0')
     @pytest.mark.parametrize("operands",
                              [IntegerOperands(x=5, y=0),
                               IntegerOperands(x=0, y=0)],
                              ids=idfn)
     def test_unsuccessful_remainder_by_zero(self, calculator_steps, operands):
-        response = calculator_steps.do_division(operands)
+        response = calculator_steps.do_remainder(operands)
 
         # assert_http_status_code(response=response, expected_code=422)
         assert_json_header(response=response)
@@ -45,12 +45,12 @@ class TestDivision:
         error = ServerSchemasSteps.get_server_error(response)
         assert_calculator_calculation_error(calculation_error=error)
 
-    @allure.title('Безуспешное деление с нецелочисленным числом')
+    @allure.title('Безуспешное вычисление остатка от деления с нецелочисленным числом')
     @pytest.mark.parametrize("operands",
                              CalculatorDataProvider.get_unsuccessful_not_int_data(),
                              ids=idfn)
-    def test_unsuccessful_division_not_int_number(self, calculator_steps, operands: AnyOperands):
-        response = calculator_steps.do_division(operands)
+    def test_unsuccessful_remainder_not_int_number(self, calculator_steps, operands: AnyOperands):
+        response = calculator_steps.do_remainder(operands)
 
         # assert_http_status_code(response=response, expected_code=422)
         assert_json_header(response=response)
@@ -58,12 +58,12 @@ class TestDivision:
         error = ServerSchemasSteps.get_server_error(response)
         assert_calculator_not_int_error(calculation_error=error)
 
-    @allure.title('Безуспешное деление с числом, превышающим размер')
+    @allure.title('Безуспешное вычисление остатка от деления с числом, превышающим размер')
     @pytest.mark.parametrize("operands",
                              CalculatorDataProvider.get_unsuccessful_oversize_data(),
                              ids=idfn)
-    def test_unsuccessful_division_oversize_number(self, calculator_steps, operands: AnyOperands):
-        response = calculator_steps.do_division(operands)
+    def test_unsuccessful_remainder_oversize_number(self, calculator_steps, operands: AnyOperands):
+        response = calculator_steps.do_remainder(operands)
 
         # assert_http_status_code(response=response, expected_code=422)
         assert_json_header(response=response)
@@ -71,11 +71,11 @@ class TestDivision:
         error = ServerSchemasSteps.get_server_error(response)
         assert_calculator_oversize_error(calculation_error=error)
 
-    @allure.title('Безуспешное деление с 1 параметром')
-    def test_unsuccessful_division_with_one_number(self, calculator_steps):
+    @allure.title('Безуспешное вычисление остатка от деления с 1 параметром')
+    def test_unsuccessful_remainder_with_one_number(self, calculator_steps):
         one_operand = OneOperand(x=5)
 
-        response = calculator_steps.do_division(one_operand)
+        response = calculator_steps.do_remainder(one_operand)
 
         # assert_http_status_code(response=response, expected_code=422)
         assert_json_header(response=response)
@@ -83,11 +83,11 @@ class TestDivision:
         error = ServerSchemasSteps.get_server_error(response)
         assert_calculator_params_count_error(calculation_error=error)
 
-    @allure.title('Безуспешное деление без параметров')
-    def test_unsuccessful_division_with_zero_numbers(self, calculator_steps):
+    @allure.title('Безуспешное вычисление остатка от деления без параметров')
+    def test_unsuccessful_remainder_with_zero_numbers(self, calculator_steps):
         zero_operands = ZeroOperands()
 
-        response = calculator_steps.do_division(zero_operands)
+        response = calculator_steps.do_remainder(zero_operands)
 
         # assert_http_status_code(response=response, expected_code=422)
         assert_json_header(response=response)
@@ -95,11 +95,11 @@ class TestDivision:
         error = ServerSchemasSteps.get_server_error(response)
         assert_calculator_params_count_error(calculation_error=error)
 
-    @allure.title('Безуспешное деление с лишними параметрами')
-    def test_unsuccessful_division_with_extra_numbers(self, calculator_steps):
+    @allure.title('Безуспешное вычисление остатка от деления с лишними параметрами')
+    def test_unsuccessful_remainder_with_extra_numbers(self, calculator_steps):
         extra_operands = ExtraOperands(x=5, y=2, z=1)
 
-        response = calculator_steps.do_division(extra_operands)
+        response = calculator_steps.do_remainder(extra_operands)
 
         # assert_http_status_code(response=response, expected_code=422)
         assert_json_header(response=response)
@@ -107,14 +107,28 @@ class TestDivision:
         error = ServerSchemasSteps.get_server_error(response)
         assert_calculator_params_count_error(calculation_error=error)
 
-    @allure.title('Безуспешное деление с некорректными именами параметров')
-    def test_unsuccessful_division_with_incorrect_name_numbers(self, calculator_steps):
+    @allure.title('Безуспешное вычисление остатка от деления с некорректными именами параметров')
+    def test_unsuccessful_remainder_with_incorrect_name_numbers(self, calculator_steps):
         extra_operands = IncorrectNameOperands(x_value=5, y_value=2)
 
-        response = calculator_steps.do_division(extra_operands)
+        response = calculator_steps.do_remainder(extra_operands)
 
         # assert_http_status_code(response=response, expected_code=422)
         assert_json_header(response=response)
 
         error = ServerSchemasSteps.get_server_error(response)
         assert_calculator_params_count_error(calculation_error=error)
+
+    @allure.title('Безуспешное вычисление остатка от деления на 0')
+    @pytest.mark.parametrize("operands",
+                             [IntegerOperands(x=5, y=0),
+                              IntegerOperands(x=0, y=0)],
+                             ids=idfn)
+    def test_unsuccessful_remainder_by_zero(self, calculator_steps, operands):
+        response = calculator_steps.do_remainder(operands)
+
+        # assert_http_status_code(response=response, expected_code=422)
+        assert_json_header(response=response)
+
+        error = ServerSchemasSteps.get_server_error(response)
+        assert_calculator_calculation_error(calculation_error=error)

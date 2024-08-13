@@ -1,3 +1,5 @@
+import httpx
+import pytest
 from httpx import Response
 from pydantic import BaseModel
 
@@ -48,3 +50,7 @@ def assert_schema(response: Response, expected_schema: type[BaseModel]):
     """
     body = response.json()
     expected_schema.model_validate(body, strict=True)
+
+
+def assert_connection_error():
+    return pytest.raises(httpx.ConnectError)

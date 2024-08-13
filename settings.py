@@ -43,3 +43,13 @@ class ServerRoutesSettings(BaseSettings):
     """
 
     state: str
+
+
+class ApplicationSettings(BaseSettings):
+    """
+    Настройки приложения.
+
+    :ivar exe_path: Путь к исполняемому файлу приложения.
+    """
+
+    exe_path: str

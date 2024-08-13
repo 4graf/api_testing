@@ -4,7 +4,7 @@ import pytest
 from assertions.base_assertions import assert_http_status_code, assert_json_header, assert_header_access_method
 from assertions.calculator_assertions import assert_internal_status_code
 from models.calculator.numeric_operands import IntegerOperands
-from steps.server.server_schemas_steps import ServerSchemasSteps
+from steps.server_api.server_schemas_steps import ServerSchemasSteps
 from tests.utils import idfn
 
 

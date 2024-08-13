@@ -8,8 +8,8 @@ from assertions.calculator_assertions import assert_calculator_result, assert_ca
 from data_providers.calculator_data_provider import CalculatorDataProvider
 from models.calculator.numeric_operands import IntegerOperands, AnyOperands, OneOperand, ZeroOperands, ExtraOperands, \
     IncorrectNameOperands
-from steps.calculator.calculator_schemas_steps import CalculatorSchemasSteps
-from steps.server.server_schemas_steps import ServerSchemasSteps
+from steps.calculator_api.calculator_schemas_steps import CalculatorSchemasSteps
+from steps.server_api.server_schemas_steps import ServerSchemasSteps
 from tests.utils import idfn
 
 
